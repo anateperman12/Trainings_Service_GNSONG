@@ -1509,7 +1509,43 @@ ul { list-style: none; }
   </div>
 </div>
 
+<!-- LOADING OVERLAY -->
+<div id="app-loader" style="display:flex;position:fixed;inset:0;z-index:999;background:#000;flex-direction:column;align-items:center;justify-content:center;gap:20px;">
+  <div style="width:38px;height:38px;background:#A100FF;"></div>
+  <div style="color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;">Cargando Academy Hub…</div>
+  <div style="width:200px;height:2px;background:#222;overflow:hidden;">
+    <div id="loader-bar" style="height:100%;background:#A100FF;width:0%;transition:width 0.4s ease;"></div>
+  </div>
+</div>
+
 <script>
+/* Loader functions — must be defined before loadData() */
+let _barW = 0;
+const _barInt = setInterval(() => {
+  _barW = Math.min(_barW + Math.random() * 18, 88);
+  const b = document.getElementById('loader-bar');
+  if (b) b.style.width = _barW + '%';
+  if (_barW >= 88) clearInterval(_barInt);
+}, 200);
+
+function showLoader() {
+  const el = document.getElementById('app-loader');
+  if (el) el.style.display = 'flex';
+}
+function hideLoader() {
+  clearInterval(_barInt);
+  const b = document.getElementById('loader-bar');
+  if (b) b.style.width = '100%';
+  setTimeout(() => {
+    const el = document.getElementById('app-loader');
+    if (el) {
+      el.style.transition = 'opacity 0.3s';
+      el.style.opacity = '0';
+      setTimeout(() => el.remove(), 300);
+    }
+  }, 300);
+}
+
 /* ============================================
    GOOGLE SHEETS DATA SOURCE
 ============================================ */
@@ -2112,44 +2148,6 @@ document.addEventListener('keydown', e => {
 /* ============================================
    INIT — carga datos desde Google Sheets
 ============================================ */
-loadData();
 </script>
-<!-- LOADING OVERLAY -->
-<div id="app-loader" style="
-  display:flex; position:fixed; inset:0; z-index:999;
-  background:#000; flex-direction:column;
-  align-items:center; justify-content:center; gap:20px;">
-  <div style="width:38px;height:38px;background:#A100FF;"></div>
-  <div style="color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;letter-spacing:0.02em;">
-    Cargando Academy Hub…
-  </div>
-  <div style="width:200px;height:2px;background:#222;border-radius:2px;overflow:hidden;">
-    <div id="loader-bar" style="height:100%;background:#A100FF;width:0%;transition:width 0.4s ease;"></div>
-  </div>
-</div>
-
-<script>
-/* Animate loader bar */
-let barW = 0;
-const barInt = setInterval(() => {
-  barW = Math.min(barW + Math.random() * 18, 88);
-  const bar = document.getElementById('loader-bar');
-  if (bar) bar.style.width = barW + '%';
-  if (barW >= 88) clearInterval(barInt);
-}, 200);
-function hideLoader() {
-  const bar = document.getElementById('loader-bar');
-  if (bar) bar.style.width = '100%';
-  setTimeout(() => {
-    const el = document.getElementById('app-loader');
-    if (el) { el.style.opacity='0'; el.style.transition='opacity 0.3s'; setTimeout(()=>el.remove(),300); }
-  }, 300);
-}
-function showLoader() {
-  const el = document.getElementById('app-loader');
-  if (el) el.style.display = 'flex';
-}
-</script>
-
 </body>
 </html>
