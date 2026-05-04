@@ -1511,17 +1511,7 @@ ul { list-style: none; }
 
 <script>
 /* ============================================
-   DATA — fácil de reemplazar con fetch() a JSON / Google Sheets
-   Para conectar a Google Sheets:
-   Reemplazá COURSES_DATA con:
-     const res = await fetch('https://opensheet.elk.sh/TU_SHEET_ID/Sheet1');
-     const COURSES_DATA = await res.json();
-============================================ */
-const COURSES_DATA = [
-/* ============================================
    GOOGLE SHEETS DATA SOURCE
-   Para actualizar el contenido: editá el Google Sheet.
-   La web recarga los datos automáticamente en cada visita.
 ============================================ */
 const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ8dPZttDTNLGdkVx1kJmivCc5L1PdXaQHa0xeH3J7cmIRbElw5ArkR6cCKidq2cwTX63zEmtf32z0w/pub?gid=1121793527&single=true&output=csv';
 
